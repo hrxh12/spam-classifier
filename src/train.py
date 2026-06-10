@@ -21,11 +21,25 @@ from sklearn.metrics import accuracy_score, classification_report
 #graphs banane ke liye
 import matplotlib.pyplot as plt
 
+# encoding="latin-1" kyun? → spam.csv mein special characters hain
+# jo normal utf-8 se nahi padhte
 #CSV file se data load kro
-df=pd.read_csv("../data/messages.csv")
+df=pd.read_csv("../data/spam.csv",encoding="latin-1")
+
+# spam.csv mein 5 columns hain → sirf v1 aur v2 chahiye  
+# v1=label(spam/ham) v2=message(actual text)              
+df=df[["v1","v2"]] 
+
+# v1 aur v2 confusing names hain → rename karo           
+# v1 → label, v2 → message                               
+df.columns=["label","message"]     
+
+# model text nahi samjhta → numbers chahiye               # NEW
+# ham → 0 (normal message)                                # NEW
+# spam → 1 (spam message)                                 # NEW
+df["label"]=df["label"].map({"ham":0,"spam":1})
 
 #df["messages"] sirf message column lo
-
 X,cv=preprocess_train(df["message"])
 
 #label column lo
