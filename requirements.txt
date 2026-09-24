@@ -2,3 +2,6 @@ pandas
 scikit-learn
 flask
 numpy
+flask-sqlalchemy
+flask-cors
+flask-limiter
